@@ -4,17 +4,42 @@ var grid;
 var start_pos;
 var focus; //potential to add more boxes
 var steps;
-var container_xPos;
+var minX; //container min
+var minY; //container min
+var curX; //box's current
+var curY; //box's current
 
 window.onload = function(){
 	console.log("hello, world!");
-	container_xPos = $("#game-container").position().left; 
-	//use to find absolute postion of #command
+	alert("click the black box to begin!");
+	
+
+	minX = $("#game-container").position().left; 
+	minY = $("#game-container").position().top;
+	//use minX to find absolute postion of #command (xPos is minX)
+	curX = minX + 0; //make this dynamic for other levels...
+	curY = minY + 0;
+
+
+	//setup keystroke commands
 	command_confirmed();
+
+
 	focus = false;
+	$("#command").hover(function(){
+		//console.log("hovering in..");
+		$(this).css("opacity", "0.75");
+		$("body").css("cursor", "pointer");
+	}, function(){
+		//console.log("hover out");
+		$(this).css("opacity", "1.0");
+		$("body").css("cursor", "auto");
+	});
+
 	$("#command").click(function() {
-  		console.log("clicked on command");// - focus system works
+  		alert("blue boxes can be controlled with the arrow keys..");// - focus system works
   		//$( "#game-container" ).keydown();
+  		$("#command").css("background-color", "blue");
 		focus = true;
 		console.log("box xPos onload: " + $("#command").position().left)
 		console.log("box yPos start: " + $("#command").position().top);
@@ -43,61 +68,67 @@ D - 68
 function command_confirmed(){
 	console.log("battlecruiser operational");
 	$(document).keydown(function( event ){
+		console.log("minY: " + minY + ", curY: " + curY);
 		if(focus){
 			console.log("handler for .keypress() called");
 			//console.log( event.keyCode );
 			focus = false;
 			animate(event.keyCode);
 		} else {
-			console.log("you can't do that");
+			console.log("you can't leave the grid");
+			focus = true;
 		}
 	});
 }
 
 function animate(code){
-	console.log("code received : " + code);
-	console.log("box xPos start: " + $("#command").position().left);
-	console.log("box yPos start: " + $("#command").position().top);
-	if(code == 37){
-		$("#command").animate({
-			left: '-=50px'
-		}, function(){
-			console.log("all done!");
-			focus = true;
-			console.log("box xPos end: " + $("#command").position().left);
-			console.log("box yPos end: " + $("#command").position().top);
-		});
-		steps++;
-	} else if (code == 38){
-		$("#command").animate({
-			bottom: '+=50px'
-		}, function(){
-			console.log("all done!");
-			focus = true;
-			console.log("box xPos end: " + $("#command").position().left);
-			console.log("box yPos end: " + $("#command").position().top);
-		});
-		steps++;
-	} else if (code == 39){
-		$("#command").animate({
-			left: '+=50px'
-		}, function(){
-			console.log("all done!");
-			focus = true;
-			console.log("box xPos end: " + $("#command").position().left);
-			console.log("box yPos end: " + $("#command").position().top);
-		});
-		steps++;
-	} else if (code == 40){
-		$("#command").animate({
-			bottom: '-=50px'
-		}, function(){
-			console.log("all done!");
-			focus = true;
-			console.log("box xPos end: " + $("#command").position().left);
-			console.log("box yPos end: " + $("#command").position().top);
-		});
-		steps++;
+	//console.log("code received : " + code);
+	//console.log("box xPos start: " + $("#command").position().left);
+	switch(code){
+		case(37):
+			if((curX - 50) >= minX){
+				curX -= 50;
+				$("#command").animate({
+					left: '-=50px'
+				}, function(){
+					focus = true;
+				});
+				steps++;
+			}
+			break;
+		case (38):
+			if((curY - 50) >= minY){
+				curY -= 50;
+				$("#command").animate({
+					bottom: '+=50px'
+				}, function(){
+					focus = true;
+				});
+				steps++;
+			}
+			break;
+		case(39):
+			if((curX + 50) < (minX + 500)){
+				curX += 50;
+				$("#command").animate({
+					left: '+=50px'
+				}, function(){
+					focus = true;
+				});
+				steps++;
+			}
+			break;
+		case(40):
+			if((curY + 50) < (minY + 500)){
+				curY += 50;
+				$("#command").animate({
+					bottom: '-=50px'
+				}, function(){
+					focus = true;
+				});
+				steps++;
+			}
+			break;
 	}
 	console.log("steps : " + steps);
 }
@@ -105,8 +136,8 @@ function animate(code){
 /*
 STEPS
 1) command entered, keycode pulled
-2) check double-array to see how far block can move
+2) check double-array to see how far block can move??
 3) pass pixel amount and direction down to animate method, 
-   or just call animate at the end of method
+   or just call animate at the end of method??
 
 */
