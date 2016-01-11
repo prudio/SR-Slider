@@ -16,6 +16,8 @@ window.onload = function(){
   		console.log("clicked on command");// - focus system works
   		//$( "#game-container" ).keydown();
 		focus = true;
+		console.log("box xPos onload: " + $("#command").position().left)
+		console.log("box yPos start: " + $("#command").position().top);
 	});
 	steps = 0;
 }
@@ -55,6 +57,7 @@ function command_confirmed(){
 function animate(code){
 	console.log("code received : " + code);
 	console.log("box xPos start: " + $("#command").position().left);
+	console.log("box yPos start: " + $("#command").position().top);
 	if(code == 37){
 		$("#command").animate({
 			left: '-=50px'
@@ -62,6 +65,7 @@ function animate(code){
 			console.log("all done!");
 			focus = true;
 			console.log("box xPos end: " + $("#command").position().left);
+			console.log("box yPos end: " + $("#command").position().top);
 		});
 		steps++;
 	} else if (code == 38){
@@ -71,6 +75,7 @@ function animate(code){
 			console.log("all done!");
 			focus = true;
 			console.log("box xPos end: " + $("#command").position().left);
+			console.log("box yPos end: " + $("#command").position().top);
 		});
 		steps++;
 	} else if (code == 39){
@@ -80,6 +85,7 @@ function animate(code){
 			console.log("all done!");
 			focus = true;
 			console.log("box xPos end: " + $("#command").position().left);
+			console.log("box yPos end: " + $("#command").position().top);
 		});
 		steps++;
 	} else if (code == 40){
@@ -89,6 +95,7 @@ function animate(code){
 			console.log("all done!");
 			focus = true;
 			console.log("box xPos end: " + $("#command").position().left);
+			console.log("box yPos end: " + $("#command").position().top);
 		});
 		steps++;
 	}

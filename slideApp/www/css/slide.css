@@ -1,0 +1,30 @@
+body{
+	margin: 0;
+	padding: 0;
+	background-color: #95a5a6;
+}
+
+.box{
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.main{
+	background-color: #1abc9c;
+}
+
+#container{
+	max-width: 480px;
+	width: 90%;
+	height: 480px;
+	margin: auto;
+	margin-top: 25px;
+	background-color: #ffffff;
+}
+
+#slider{
+
+}
